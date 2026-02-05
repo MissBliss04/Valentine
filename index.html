@@ -1,207 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Will You Be My Valentine?</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-min-height:100vh;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-display:flex;
-align-items:center;
-justify-content:center;
-font-family:'Poppins',sans-serif;
-color:#fff;
-overflow:hidden;
+body {
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  color:white;
+  overflow-x:hidden;
 }
 
-.card{
-background:rgba(255,255,255,.15);
-backdrop-filter:blur(10px);
-border-radius:24px;
-padding:40px 30px;
-text-align:center;
-width:90%;
-max-width:420px;
-box-shadow:0 20px 40px rgba(0,0,0,.15);
-animation:fadeIn 1.2s ease;
+.card {
+  max-width:420px;
+  margin:40px auto;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
 }
 
-h1{
-font-family:'Pacifico',cursive;
-font-size:2.4rem;
-margin-bottom:16px;
+h1 { font-family:'Pacifico',cursive; }
+
+button {
+  border:none;
+  padding:14px 24px;
+  border-radius:30px;
+  margin:10px;
+  font-weight:600;
+  cursor:pointer;
 }
 
-p{
-font-size:1rem;
-opacity:.95;
-margin-bottom:28px;
-line-height:1.6;
+.yes { background:#ff4d6d; color:white; }
+.no { background:white; color:#ff4d6d; }
+
+.section { padding:60px 20px; text-align:center; }
+
+.slideshow img {
+  width:200px;
+  height:200px;
+  border-radius:20px;
+  object-fit:cover;
 }
 
-.buttons{
-display:flex;
-gap:16px;
-justify-content:center;
-flex-wrap:wrap;
+.timeline {
+  max-width:600px;
+  margin:auto;
+  text-align:left;
 }
 
-button{
-border:none;
-padding:14px 26px;
-border-radius:999px;
-font-size:1rem;
-font-weight:600;
-cursor:pointer;
-transition:.2s;
+.timeline div {
+  background:rgba(255,255,255,0.15);
+  margin:15px 0;
+  padding:15px;
+  border-radius:15px;
 }
 
-.yes{
-background:#ff4d6d;
-color:#fff;
-box-shadow:0 10px 20px rgba(255,77,109,.4);
+.heart {
+  position:fixed;
+  font-size:20px;
+  animation:floatUp 4s linear forwards;
 }
 
-.no{
-background:rgba(255,255,255,.9);
-color:#ff4d6d;
-}
-
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 14px 26px rgba(0,0,0,.2);
-}
-
-.message{
-margin-top:24px;
-font-size:1.1rem;
-font-weight:500;
-display:none;
-animation:pop .5s ease;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:scale(.9)}
-to{opacity:1;transform:scale(1)}
-}
-
-@keyframes pop{
-0%{transform:scale(.8)}
-100%{transform:scale(1)}
-}
-
-.heart{
-position:absolute;
-font-size:18px;
-animation:floatUp 6s linear infinite;
-opacity:.7;
-}
-
-@keyframes floatUp{
-from{transform:translateY(100vh)}
-to{transform:translateY(-10vh)}
+@keyframes floatUp {
+  from { transform:translateY(100vh); }
+  to { transform:translateY(-10vh); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-<img id="photo" src="https://via.placeholder.com/120" style="width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:16px;border:4px solid rgba(255,255,255,0.6);"/>
+<div class="card" id="mainCard">
+  <img src="photo.jpeg" width="120" style="border-radius:50%" />
+  <h1>Hey Sreedath ❤️</h1>
+  <p>Will you be my Valentine?</p>
 
-<h1>Hey <span id="name">My Love</span> 💖<br/>Will you be my Valentine?</h1>
-
-<p>
-From the moment I thought of you,
-this question felt inevitable 💕<br/>
-So here I am, asking properly.
-</p>
-
-<div class="buttons">
-<button class="yes" onclick="sayYes()">Yes 💘</button>
-<button class="no" id="noBtn">No 🙈</button>
+  <button class="yes" onclick="sayYes()">Yes 💘</button>
+  <button class="no" id="noBtn">No 🙈</button>
 </div>
 
-<div id="message" class="message"></div>
+<audio id="song" src="song.mp3" loop></audio>
+
+<div id="afterYes" style="display:none">
+
+<div class="section">
+<h2>💌 Love Letter</h2>
+<p id="typeText"></p>
 </div>
 
-<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+<div class="section slideshow">
+<h2>📸 Our Memories</h2>
+<img id="slideImg" src="photo.jpeg" />
+</div>
+
+<div class="section timeline">
+<h2>📅 Our Timeline</h2>
+<div>💫 When we met - Destiny started</div>
+<div>💖 Now - Growing together</div>
+<div>✨ Future - Forever us</div>
+</div>
+
+</div>
 
 <script>
+const loveMessage = "From the moment you came into my life, everything felt brighter, calmer, and more meaningful. You are my comfort, my happiness, and my favorite person.";
 
-const personName='Sreedath';
-const photoUrl='./photo.jpeg';
-
-document.getElementById('name').innerText=personName;
-document.getElementById('photo').src=photoUrl;
-
-document.body.addEventListener('click',()=>{
-document.getElementById('bgMusic').play().catch(()=>{});
-},{once:true});
+let i=0;
+function typeWriter(){
+ if(i < loveMessage.length){
+ document.getElementById("typeText").innerHTML += loveMessage.charAt(i);
+ i++;
+ setTimeout(typeWriter,40);
+ }
+}
 
 function sayYes(){
-const msg=document.getElementById('message');
-msg.style.display='block';
-msg.innerHTML='YAY!! 💕💍 This just became my favorite moment ever.';
-confetti();
+ document.getElementById("mainCard").style.display="none";
+ document.getElementById("afterYes").style.display="block";
+ document.getElementById("song").play();
+ typeWriter();
+ heartExplosion();
 }
 
-function sayNo(){
-const msg=document.getElementById('message');
-msg.style.display='block';
-msg.innerHTML='Nice try 😌 but you still can’t say no that easily 💗';
-}
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseenter",()=>{
+ const x=Math.random()*window.innerWidth;
+ const y=Math.random()*window.innerHeight;
+ noBtn.style.position="fixed";
+ noBtn.style.left=x+"px";
+ noBtn.style.top=y+"px";
+});
 
-const hearts=['❤️','💖','💘','💕'];
+const slides=["photo.jpeg","photo2.jpeg","photo3.jpeg"];
+let slideIndex=0;
 setInterval(()=>{
-const heart=document.createElement('div');
-heart.className='heart';
-heart.innerText=hearts[Math.floor(Math.random()*hearts.length)];
-heart.style.left=Math.random()*100+'vw';
-heart.style.animationDuration=4+Math.random()*4+'s';
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),7000);
-},500);
+ slideIndex=(slideIndex+1)%slides.length;
+ document.getElementById("slideImg").src=slides[slideIndex];
+},3000);
 
-const noBtn=document.getElementById('noBtn');
-let escapes=0;
-
-noBtn.addEventListener('mouseenter',moveButton);
-noBtn.addEventListener('touchstart',moveButton);
-
-function moveButton(){
-if(escapes>4)return;
-escapes++;
-const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
-const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
-noBtn.style.position='fixed';
-noBtn.style.left=x+'px';
-noBtn.style.top=y+'px';
+function heartExplosion(){
+ for(let j=0;j<50;j++){
+ let heart=document.createElement("div");
+ heart.className="heart";
+ heart.innerHTML="💖";
+ heart.style.left=Math.random()*100+"vw";
+ heart.style.top="-20px";
+ document.body.appendChild(heart);
+ setTimeout(()=>heart.remove(),4000);
+ }
 }
-
-function confetti(){
-for(let i=0;i<40;i++){
-const c=document.createElement('div');
-c.innerText='💖';
-c.style.position='fixed';
-c.style.left=Math.random()*100+'vw';
-c.style.top='-20px';
-c.style.fontSize='20px';
-c.style.animation='floatUp 3s linear forwards';
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),3000);
-}
-}
-
 </script>
 
 </body>
 </html>
-
