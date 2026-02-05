@@ -34,6 +34,7 @@ button {
   margin:10px;
   font-weight:600;
   cursor:pointer;
+  transition:0.2s;
 }
 
 .yes { background:#ff4d6d; color:white; }
@@ -64,7 +65,7 @@ button {
 .heart {
   position:fixed;
   font-size:20px;
-  animation:floatUp 4s linear forwards;
+  animation:floatUp 6s linear forwards;
 }
 
 @keyframes floatUp {
@@ -109,8 +110,11 @@ button {
 </div>
 
 <script>
+
+// ===== PERSONAL SETTINGS =====
 const loveMessage = "From the moment you came into my life, everything felt brighter, calmer, and more meaningful. You are my comfort, my happiness, and my favorite person.";
 
+// ===== TYPEWRITER =====
 let i=0;
 function typeWriter(){
  if(i < loveMessage.length){
@@ -120,23 +124,29 @@ function typeWriter(){
  }
 }
 
+// ===== YES CLICK =====
 function sayYes(){
  document.getElementById("mainCard").style.display="none";
  document.getElementById("afterYes").style.display="block";
  document.getElementById("song").play();
  typeWriter();
- heartExplosion();
+ confettiExplosion();
 }
 
+// ===== RUNAWAY NO BUTTON =====
 const noBtn = document.getElementById("noBtn");
+let escapes = 0;
 noBtn.addEventListener("mouseenter",()=>{
- const x=Math.random()*window.innerWidth;
- const y=Math.random()*window.innerHeight;
+ if(escapes > 6) return;
+ escapes++;
+ const x=Math.random()*(window.innerWidth-100);
+ const y=Math.random()*(window.innerHeight-50);
  noBtn.style.position="fixed";
  noBtn.style.left=x+"px";
  noBtn.style.top=y+"px";
 });
 
+// ===== SLIDESHOW =====
 const slides=["photo.jpeg","photo2.jpeg","photo3.jpeg"];
 let slideIndex=0;
 setInterval(()=>{
@@ -144,17 +154,36 @@ setInterval(()=>{
  document.getElementById("slideImg").src=slides[slideIndex];
 },3000);
 
-function heartExplosion(){
- for(let j=0;j<50;j++){
+// ===== FLOATING BACKGROUND HEARTS =====
+const hearts=["❤️","💖","💘","💕"];
+setInterval(()=>{
  let heart=document.createElement("div");
  heart.className="heart";
- heart.innerHTML="💖";
+ heart.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
  heart.style.left=Math.random()*100+"vw";
- heart.style.top="-20px";
+ heart.style.top="100vh";
  document.body.appendChild(heart);
- setTimeout(()=>heart.remove(),4000);
+ setTimeout(()=>heart.remove(),6000);
+},600);
+
+// ===== CONFETTI EXPLOSION =====
+function confettiExplosion(){
+ for(let j=0;j<60;j++){
+ let c=document.createElement("div");
+ c.className="heart";
+ c.innerHTML="💖";
+ c.style.left=Math.random()*100+"vw";
+ c.style.top="-20px";
+ document.body.appendChild(c);
+ setTimeout(()=>c.remove(),4000);
  }
 }
+
+// ===== MUSIC START AFTER FIRST CLICK =====
+document.body.addEventListener("click",()=>{
+ document.getElementById("song").play().catch(()=>{});
+},{once:true});
+
 </script>
 
 </body>
