@@ -65,12 +65,12 @@ button {
 .heart {
   position:fixed;
   font-size:20px;
-  animation:floatUp 6s linear forwards;
+  pointer-events:none;
 }
 
-@keyframes floatUp {
-  from { transform:translateY(100vh); }
-  to { transform:translateY(-10vh); }
+@keyframes floatUpFull {
+  0% { transform:translateY(110vh); opacity:1; }
+  100% { transform:translateY(-20vh); opacity:0.9; }
 }
 </style>
 </head>
@@ -111,10 +111,8 @@ button {
 
 <script>
 
-// ===== PERSONAL SETTINGS =====
-const loveMessage = "From the moment you came into my life, everything felt brighter, calmer, and more meaningful. You are my comfort, my happiness, and my favorite person.";
-
 // ===== TYPEWRITER =====
+const loveMessage = "From the moment you came into my life, everything felt brighter, calmer, and more meaningful. You are my comfort, my happiness, and my favorite person.";
 let i=0;
 function typeWriter(){
  if(i < loveMessage.length){
@@ -154,32 +152,32 @@ setInterval(()=>{
  document.getElementById("slideImg").src=slides[slideIndex];
 },3000);
 
-// ===== FLOATING BACKGROUND HEARTS =====
+// ===== FULL FLOATING HEARTS (LIKE OLD PAGE) =====
 const hearts=["❤️","💖","💘","💕"];
 setInterval(()=>{
  let heart=document.createElement("div");
  heart.className="heart";
  heart.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
  heart.style.left=Math.random()*100+"vw";
- heart.style.top="100vh";
+ heart.style.animation="floatUpFull "+(5+Math.random()*4)+"s linear forwards";
  document.body.appendChild(heart);
- setTimeout(()=>heart.remove(),6000);
-},600);
+ setTimeout(()=>heart.remove(),9000);
+},400);
 
-// ===== CONFETTI EXPLOSION =====
+// ===== CONFETTI =====
 function confettiExplosion(){
  for(let j=0;j<60;j++){
  let c=document.createElement("div");
  c.className="heart";
  c.innerHTML="💖";
  c.style.left=Math.random()*100+"vw";
- c.style.top="-20px";
+ c.style.animation="floatUpFull 3s linear forwards";
  document.body.appendChild(c);
- setTimeout(()=>c.remove(),4000);
+ setTimeout(()=>c.remove(),3000);
  }
 }
 
-// ===== MUSIC START AFTER FIRST CLICK =====
+// ===== MUSIC START =====
 document.body.addEventListener("click",()=>{
  document.getElementById("song").play().catch(()=>{});
 },{once:true});
@@ -188,3 +186,5 @@ document.body.addEventListener("click",()=>{
 
 </body>
 </html>
+
+
